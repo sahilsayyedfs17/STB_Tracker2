@@ -94,7 +94,7 @@
         function searchDevice() {
             const casNumber = document.getElementById('casSearchInput').value;
 
-            fetch('http://localhost:3001/searchSTB', {
+            fetch('https://stb-tracker2-backend.onrender.com/searchSTB', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
