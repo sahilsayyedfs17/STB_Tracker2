@@ -1,0 +1,19 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "STB/backend/index.js",
+        "use": "@vercel/node",
+        "config": {
+          "includeFiles": ["STB/backend/package.json", "STB/backend/package-lock.json"]
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "STB/backend/index.js"
+      }
+    ]
+  }
+  
