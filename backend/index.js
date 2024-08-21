@@ -2,7 +2,7 @@ const express = require('express');
 const { MongoClient } = require('mongodb');
 const path = require('path');
 const cors = require('cors');
-require('dotenv').config();
+//require('dotenv').config();
 
 const app = express();
 app.use(cors());
@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3001;
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Direct MongoDB URI
-const uri = process.env.MONGO_URI;
+const uri = "mongodb+srv://sahilsayyedfs17:Adam%400001@cluster0.jgmgm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // MongoDB client and database variables
 let db;
