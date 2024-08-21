@@ -103,7 +103,7 @@
             const casNumber = document.getElementById('casTransferInput').value;
             const newUserName = document.getElementById('newUserInput').value;
 
-            fetch('http://localhost:3001/transferDevice', {
+            fetch('https://stb-tracker2-backend.onrender.com/transferDevice', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
