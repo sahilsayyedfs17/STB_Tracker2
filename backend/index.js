@@ -104,7 +104,7 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 const db = mysql.createConnection({
     host: 'localhost',  // Update this if your database is hosted elsewhere
     user: 'root',  // Replace with your MySQL username
-    password: 'root',  // Replace with your MySQL password
+    password: 'Adam@0001',  // Replace with your MySQL password
     database: 'set_top_box_tracker'  // Database name
 });
 
