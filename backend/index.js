@@ -8,6 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const PORT = process.env.PORT || 3001;
 
 // Serve static files from the frontend directory
 app.use(express.static(path.join(__dirname, '../frontend')));
@@ -96,6 +97,6 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
-app.listen(3001, '0.0.0.0', () => {
-    console.log('Server is running on port 3001');
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on `{PORT});
 });
