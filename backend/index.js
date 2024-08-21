@@ -21,7 +21,7 @@ let db;
 let checkinsCollection;
 
 // Connect to MongoDB Atlas
-MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+MongoClient.connect(uri)
     .then(client => {
         console.log('Connected to MongoDB Atlas');
         db = client.db('set_top_box_tracker');  // Replace with your database name
