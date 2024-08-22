@@ -33,37 +33,76 @@ MongoClient.connect(uri)
     .catch(err => console.error('Failed to connect to MongoDB Atlas:', err));
 
 // Route for checking in a device
+// app.post('/checkin', (req, res) => {
+//     const { casNumber, serialNumber, userName } = req.body;
+//     checkinsCollection.insertOne({ cas_number: casNumber, serial_number: serialNumber, user_name: userName })
+//         .then(result => {
+//             res.status(200).send('Device checked in successfully.');
+//         })
+//         .catch(err => {
+//             console.error('Database error:', err);
+//             res.status(500).send('Failed to check in device.');
+//         });
+// });
+
+// Route for checking in a device
 app.post('/checkin', (req, res) => {
-    const { casNumber, serialNumber, userName } = req.body;
-    checkinsCollection.insertOne({ cas_number: casNumber, serial_number: serialNumber, user_name: userName })
-        .then(result => {
-            res.status(200).send('Device checked in successfully.');
+    const { casNumber, userName } = req.body;
+
+    // Check if the CAS number already exists in the database
+    checkinsCollection.findOne({ cas_number: casNumber })
+        .then(existingRecord => {
+            if (existingRecord) {
+                // CAS exists, update the username
+                checkinsCollection.updateOne(
+                    { cas_number: casNumber },
+                    { $set: { user_name: userName } }
+                )
+                .then(() => {
+                    res.status(200).send('Username updated successfully.');
+                })
+                .catch(err => {
+                    console.error('Database error:', err);
+                    res.status(500).send('Failed to update username.');
+                });
+            } else {
+                // CAS does not exist, insert new record
+                checkinsCollection.insertOne({ cas_number: casNumber, user_name: userName })
+                .then(() => {
+                    res.status(200).send('Device checked in successfully.');
+                })
+                .catch(err => {
+                    console.error('Database error:', err);
+                    res.status(500).send('Failed to check in device.');
+                });
+            }
         })
         .catch(err => {
             console.error('Database error:', err);
-            res.status(500).send('Failed to check in device.');
+            res.status(500).send('Failed to check CAS number.');
         });
 });
 
+
 // Route for transferring a device
-app.post('/transfer', (req, res) => {
-    const { casNumber, newUserName } = req.body;
-    checkinsCollection.updateOne(
-        { cas_number: casNumber },
-        { $set: { user_name: newUserName } }
-    )
-    .then(result => {
-        if (result.matchedCount === 0) {
-            res.status(404).send('Device not found.');
-            return;
-        }
-        res.status(200).send('Device transferred successfully.');
-    })
-    .catch(err => {
-        console.error('Database error:', err);
-        res.status(500).send('Failed to transfer device.');
-    });
-});
+// app.post('/transfer', (req, res) => {
+//     const { casNumber, newUserName } = req.body;
+//     checkinsCollection.updateOne(
+//         { cas_number: casNumber },
+//         { $set: { user_name: newUserName } }
+//     )
+//     .then(result => {
+//         if (result.matchedCount === 0) {
+//             res.status(404).send('Device not found.');
+//             return;
+//         }
+//         res.status(200).send('Device transferred successfully.');
+//     })
+//     .catch(err => {
+//         console.error('Database error:', err);
+//         res.status(500).send('Failed to transfer device.');
+//     });
+// });
 
 // Route for searching STB by CAS number
 app.post('/searchSTB', (req, res) => {
