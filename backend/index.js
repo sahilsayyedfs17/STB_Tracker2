@@ -46,7 +46,7 @@ app.post('/checkin', (req, res) => {
 });
 
 // Route for transferring a device
-app.post('/transferDevice', (req, res) => {
+app.post('/transfer', (req, res) => {
     const { casNumber, newUserName } = req.body;
     checkinsCollection.updateOne(
         { cas_number: casNumber },
