@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set-top Box Tracker - Transfer Device</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        #result {
+            margin: 20px 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        #scanner {
+            margin: 20px 0;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: #ddd;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Transfer Device</h1>
+        <button onclick="scanBarcode('CAS')">Scan CAS</button>
+        <div id="scanner"></div>
+        <input type="text" id="casInput" placeholder="CAS Number">
+        <input type="text" id="transferToInput" placeholder="Transfer To">
+        <button onclick="transfer()">Transfer</button>
+        <div id="result"></div>
+        <a href="index.html" class="button">Back to Home</a>
+    </div>
+    
+    <script>
+        function transfer() {
+            const casNumber = document.getElementById('casInput').value;
+            const transferTo = document.getElementById('transferToInput').value;
+
+            fetch('https://stb-tracker2-backend.onrender.com/transfer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ casNumber, transferTo })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('result').innerText = data;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').innerText = 'Error: ' + error.message;
+            });
+        }
+
+        function scanBarcode(fieldId) {
+            const html5QrcodeScanner = new Html5QrcodeScanner("scanner", { fps: 10, qrbox: 310 });
+
+            html5QrcodeScanner.render((decodedText, decodedResult) => {
+                document.getElementById(fieldId.toLowerCase() + 'Input').value = decodedText;
+                html5QrcodeScanner.clear(); // Stop scanning
+            });
+        }
+    </script>
+</body>
+</html>
