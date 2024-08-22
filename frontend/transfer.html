@@ -104,10 +104,10 @@
     <div class="container">
         <h1>Transfer Device</h1>
         <button onclick="scanBarcode('CAS')">Scan CAS</button>
-        <button onclick="scanBarcode('SRNo')">Scan Serial Number</button>
+<!--         <button onclick="scanBarcode('SRNo')">Scan Serial Number</button> -->
         <div id="scanner"></div>
         <input type="text" id="casTransferInput" placeholder="CAS Number">
-        <input type="text" id="srnoInput" placeholder="Serial Number">
+<!--         <input type="text" id="srnoInput" placeholder="Serial Number"> -->
         <input type="text" id="newUserInput" placeholder="Transfer To (New User)">
         <button onclick="transferDevice()">Transfer</button>
         <div id="transferResult"></div>
@@ -117,7 +117,7 @@
     <script>
         function transferDevice() {
             const casNumber = document.getElementById('casTransferInput').value;
-            const serialNumber = document.getElementById('srnoInput').value;
+            // const serialNumber = document.getElementById('srnoInput').value;
             const newUserName = document.getElementById('newUserInput').value;
 
             fetch('https://stb-tracker2-backend.onrender.com/transferDevice', {
@@ -125,7 +125,8 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ casNumber, serialNumber , newUserName })
+                // body: JSON.stringify({ casNumber, serialNumber , newUserName })
+                body: JSON.stringify({ casNumber, newUserName })
             })
             .then(response => response.text())
             .then(data => {
