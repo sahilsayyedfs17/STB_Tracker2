@@ -99,10 +99,10 @@
     <div class="container">
         <h1>Check In Device</h1>
         <button onclick="scanBarcode('CAS')">Scan CAS</button>
-        <button onclick="scanBarcode('SRNo')">Scan Serial Number</button>
+<!--         <button onclick="scanBarcode('SRNo')">Scan Serial Number</button> -->
         <div id="scanner"></div>
         <input type="text" id="casInput" placeholder="CAS Number">
-        <input type="text" id="srnoInput" placeholder="Serial Number">
+<!--         <input type="text" id="srnoInput" placeholder="Serial Number"> -->
         <input type="text" id="userInput" placeholder="User Name">
         <button onclick="checkIn()">Check In</button>
         <div id="result"></div>
@@ -112,7 +112,7 @@
     <script>
         function checkIn() {
             const casNumber = document.getElementById('casInput').value;
-            const serialNumber = document.getElementById('srnoInput').value;
+            // const serialNumber = document.getElementById('srnoInput').value;
             const userName = document.getElementById('userInput').value;
 
             fetch('https://stb-tracker2-backend.onrender.com/checkin', {
@@ -120,7 +120,8 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ casNumber, serialNumber, userName })
+                // body: JSON.stringify({ casNumber, serialNumber, userName })
+                body: JSON.stringify({ casNumber, userName })
             })
             .then(response => {
                 if (!response.ok) {
