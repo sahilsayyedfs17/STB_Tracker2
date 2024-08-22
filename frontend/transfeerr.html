@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -106,7 +106,9 @@
         <button onclick="scanBarcode('CAS')">Scan CAS</button>
 <!--         <button onclick="scanBarcode('SRNo')">Scan Serial Number</button> -->
         <div id="scanner"></div>
-        <input type="text" id="casTransferInput" placeholder="CAS Number">
+<!--         <input type="text" id="casTransferInput" placeholder="CAS Number"> -->
+        <input type="text" id="casInput" placeholder="CAS Number">
+
 <!--         <input type="text" id="srnoInput" placeholder="Serial Number"> -->
         <input type="text" id="newUserInput" placeholder="Transfer To (New User)">
         <button onclick="transferDevice()">Transfer</button>
@@ -116,7 +118,7 @@
     
     <script>
         function transferDevice() {
-            const casNumber = document.getElementById('casTransferInput').value;
+            const casNumber = document.getElementById('casInput').value;
             // const serialNumber = document.getElementById('srnoInput').value;
             const newUserName = document.getElementById('newUserInput').value;
 
@@ -151,3 +153,4 @@
     </script>
 </body>
 </html>
+ -->
