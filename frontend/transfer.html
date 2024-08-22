@@ -108,30 +108,30 @@
     
     <script>
         function transfer() {
-            const casNumber = document.getElementById('casInput').value;
-            const transferTo = document.getElementById('transferToInput').value;
+    const casNumber = document.getElementById('casInput').value;
+    const newUserName = document.getElementById('transferToInput').value;  // Use 'newUserName'
 
-            fetch('https://stb-tracker2-backend.onrender.com/transfer', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ casNumber, transferTo })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.text();
-            })
-            .then(data => {
-                document.getElementById('result').innerText = data;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('result').innerText = 'Error: ' + error.message;
-            });
+    fetch('https://stb-tracker2-backend.onrender.com/transfer', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ casNumber, newUserName })  // Send 'newUserName'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
         }
+        return response.text();
+    })
+    .then(data => {
+        document.getElementById('result').innerText = data;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('result').innerText = 'Error: ' + error.message;
+    });
+}
 
         function scanBarcode(fieldId) {
             const html5QrcodeScanner = new Html5QrcodeScanner("scanner", { fps: 10, qrbox: 310 });
